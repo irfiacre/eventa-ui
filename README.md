@@ -1,0 +1,2 @@
+# eventa
+Event management platform
