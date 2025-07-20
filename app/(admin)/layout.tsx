@@ -60,7 +60,7 @@ export default function RootLayout({
 
             <main className="w-full p-6 mt-8">
               <div className="">
-                <TopNav user={session?.user} title="Overview" />
+                <TopNav title="Overview" />
                 <ToastContainer />
               </div>
               <div>{children}</div>

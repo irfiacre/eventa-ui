@@ -76,14 +76,11 @@ const EventsTable = ({
         <span className="w-2/4 max-sm:hidden">Price</span>
         <span className="w-2/4">Location</span>
         <span className="w-2/4">Date</span>
-        <span className="w-2/4">Edit</span>
       </div>
       <hr />
       {loading || !tableData[0] ? (
         <div className="text-textLightColor text-base font-light text-center p-10 -ml-10">
-          <span>{`${
-            loading ? "Loading Data..." : "No Events Found"
-          }`}</span>
+          <span>{`${loading ? "Loading Data..." : "No Events Found"}`}</span>
         </div>
       ) : (
         <div>
@@ -108,7 +105,7 @@ const EventsTable = ({
                 <div className="text-sm w-2/4">
                   <Link href={`/events/${item.id}`}>
                     <span className="text-textLightColor font-light">
-                      {item.capacity}
+                      {formatPrice(item.capacity)}
                     </span>
                   </Link>
                 </div>
@@ -133,7 +130,7 @@ const EventsTable = ({
                     </span>
                   </Link>
                 </div>
-                <div className="w-2/4">
+                {/* <div className="w-2/4">
                   <div className="inline-flex self-center items-center p-2 text-sm font-medium text-center text-textLightColor bg-inherit rounded-full hover:bg-primary hover:text-white focus:outline-none">
                     <Link href={`/events/edit/${item.id}`}>
                       <Icon icon="tabler:edit" fontSize={20} />
@@ -146,7 +143,7 @@ const EventsTable = ({
                   >
                     <Icon icon="mdi:delete" fontSize={20} />
                   </button>
-                </div>
+                </div> */}
               </div>
               <hr />
             </div>

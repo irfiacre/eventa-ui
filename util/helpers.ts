@@ -84,3 +84,21 @@ export const generateFileName = (text?: string): string => {
 export const formatPrice = (num: number | string): string => {
   return Number(num).toLocaleString(undefined, { maximumFractionDigits: 0 });
 };
+
+export const decodeJwt = (token: string): any | null => {
+  if (!token) return null;
+  try {
+    const payload = token.split(".")[1];
+    if (!payload) return null;
+    const decoded = atob(payload.replace(/-/g, "+").replace(/_/g, "/"));
+    return JSON.parse(decoded);
+  } catch {
+    return null;
+  }
+};
+
+export const getToken = (): string | null => {
+  const userStr: string | null = localStorage.getItem("userDetails");
+  const userObject = userStr ? JSON.parse(userStr) : {};
+  return userObject.token;
+};

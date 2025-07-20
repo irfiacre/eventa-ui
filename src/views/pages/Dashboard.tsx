@@ -2,7 +2,7 @@ import AnalyticsCard from "@/src/components/cards/AnalyticsCard";
 import React, { useEffect, useState } from "react";
 import Events from "@/src/components/tables/Events";
 import {
-  getHostAnalytics,
+  getAnalytics,
   getEvents,
   manageEvent,
 } from "@/services/backend";
@@ -27,21 +27,22 @@ const DashboardPage = ({ userInfo }: { userInfo: any }) => {
           // userInfo.user_id
         );        
         setEvents(eventsResult);
-    //     const analyticsResult = await getHostAnalytics(userInfo.user_id);
-    //     setAnalytics([
-    //       {
-    //         title: "Events",
-    //         count: analyticsResult?.events || 0,
-    //       },
-    //       {
-    //         title: "Bookings",
-    //         count:  analyticsResult?.bookings || 0,
-    //       },
-    //       {
-    //         title: "Earnings",
-    //         count: analyticsResult ? formatPrice(analyticsResult.earnings) : 0,
-    //       },
-    //     ]);
+        const analyticsResult = {}
+        // await getAnalytics(userInfo.id);
+        setAnalytics([
+          {
+            title: "Events",
+            count: events.length || 0,
+          },
+          {
+            title: "Bookings",
+            count:  analyticsResult?.bookings || 0,
+          },
+          {
+            title: "Earnings",
+            count: analyticsResult ? formatPrice(analyticsResult.earnings) : 0,
+          },
+        ]);
         setLoading(false);
       })();
     // }
@@ -56,7 +57,6 @@ const DashboardPage = ({ userInfo }: { userInfo: any }) => {
     });
     setRefetch(true);
   };
-console.log('-------->', events);
 
   return (
     <div className="flex flex-col gap-5 space-y-2.5">

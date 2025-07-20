@@ -14,7 +14,7 @@ const BaseButton = ({
       <button
         type="submit"
         onClick={handleSubmit}
-        className="w-full text-white bg-secondary hover:bg-primaryDark focus:outline-none  font-medium rounded-md text-md text-center p-3 disabled:bg-borderColorLight"
+        className="w-full text-white bg-primary hover:bg-primaryDark focus:outline-none font-medium rounded-md text-md text-center px-5 py-2 disabled:bg-borderColorLight"
         disabled={loading}
       >
         {loading ? "..." : text}

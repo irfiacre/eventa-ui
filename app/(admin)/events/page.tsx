@@ -8,19 +8,25 @@ import { useRouter } from "next/navigation";
 
 const AddEvent = ({ user }: any) => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);  
+  const [loading, setLoading] = useState(false);
 
   const handleOnSubmit = async (data: any) => {
     setLoading(true);
-    const propertyData = {
-      ...data,
-      host: user.user_id,
-      furnished: data.furnished == "true",
-    };
+    const { title, description, location, date, capacity, price, thumbnail } =
+      data;
 
-    const result = await createEvent(propertyData);
+    const result = await createEvent({
+      title,
+      description,
+      location,
+      date,
+      capacity: parseInt(capacity),
+      price: parseFloat(price),
+      thumbnail,
+    });
+
     if (result.title) {
-      toast.success(`Your property "${result.title}" added successfuly!`, {
+      toast.success(`Your Event "${result.title}" added successfuly!`, {
         hideProgressBar: true,
         closeOnClick: true,
         autoClose: 3000,
@@ -32,7 +38,7 @@ const AddEvent = ({ user }: any) => {
 
   return (
     // <div>
-      <EventForm onFormSubmit={handleOnSubmit} loading={loading} />
+    <EventForm onFormSubmit={handleOnSubmit} loading={loading} />
     // </div>
   );
 };

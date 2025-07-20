@@ -1,17 +1,18 @@
 "use client";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { signOut } from "next-auth/react";
 import UserViewComponent from "./UserViewComponent";
+import isAuth from "@/src/components/isAuth";
 
 const TopNav = ({ user, title }: { user: any; title: string }) => {
+  const router = useRouter()
   const params: any = useParams();
   const [isActive, handleDropdown] = useState(false);
   const [currentTitle, setCurrentTitle] = useState("Overview");
 
   const handleLogout = async () => {
-    await signOut({ callbackUrl: `/` });
+    localStorage.removeItem("userDetails");
+    router.push("/");
   };
 
   useEffect(() => {
@@ -25,14 +26,12 @@ const TopNav = ({ user, title }: { user: any; title: string }) => {
     );
   }, [params]);
 
-  const hasBack = false;
-
   return (
     <div className="flex flex-row justify-between">
       <h1 className="text-primary text-2xl capitalize">{currentTitle}</h1>
       <div className="mr-6 flex flex-row gap-3 items-center text-notificationIconColor">
         <div className="">
-          <Icon icon="zondicons:notification" fontSize={20} />
+          {user?.firstName}
         </div>
         <div>|</div>
         <UserViewComponent
@@ -46,4 +45,4 @@ const TopNav = ({ user, title }: { user: any; title: string }) => {
   );
 };
 
-export default TopNav;
+export default isAuth(TopNav);

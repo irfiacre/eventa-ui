@@ -1,27 +1,27 @@
 "use client";
-import { manageProperty } from "@/services/backend";
-import PropertyForm from "@/src/components/forms/EventForm";
+import { getEvents,manageEvent } from "@/services/backend";
+import EventForm from "@/src/components/forms/EventForm";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const EditRentalPage = () => {
+const EditEventPage = () => {
   const params = useParams();
-  const [property, setProperty] = useState<any>({});
+  const [event, setProperty] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const result = await manageProperty(params.id);
+      const result = await getEvents(params.id);
       setProperty(result);
     })();
   }, [params.id]);
 
-  const handleUpdateProperty = async (data: any) => {
+  const handleUpdateEvent = async (data: any) => {
     setLoading(true);
-    const result = await manageProperty(params.id, "PATCH", data);
+    const result = await manageEvent(params?.id, "PUT", data);
     if (result.title) {
-      toast.success(`Your property "${result.title}" updated successfuly!`, {
+      toast.success(`Your event "${result.title}" updated successfuly!`, {
         hideProgressBar: true,
         closeOnClick: true,
         autoClose: 3000,
@@ -32,16 +32,16 @@ const EditRentalPage = () => {
 
   return (
     <div>
-      {!property.property_id ? (
+      {!event.id ? (
         <div className="text-textLightColor text-base font-light text-center p-10 -ml-10">
           <span>Loading Data...</span>
         </div>
       ) : (
         <div>
-          <PropertyForm
-            onFormSubmit={handleUpdateProperty}
+          <EventForm
+            onFormSubmit={handleUpdateEvent}
             loading={loading}
-            defaultValues={property}
+            defaultValues={event}
           />
         </div>
       )}
@@ -49,4 +49,4 @@ const EditRentalPage = () => {
   );
 };
 
-export default EditRentalPage;
+export default EditEventPage;

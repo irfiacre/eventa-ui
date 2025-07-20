@@ -23,7 +23,6 @@ const SecondSection = ({ user }: { user: any }) => {
   }, []);
 
   const [selectedRental, setSelectedRental] = useState<null | any>(null);
-  console.log("cardContent", cardContent);
   return (
     <section className="px-10 pb-10 align-middle max-md:px-5">
       <div className="">
@@ -57,7 +56,7 @@ const SecondSection = ({ user }: { user: any }) => {
                     className="rounded-t-xl w-full h-40 object-cover bg-textLightColor"
                     loader={() => item.thumbnail}
                     src={item.thumbnail || DEFAULT_IMAGE}
-                    alt={`${item.property_id}`}
+                    alt={`${item.id}`}
                     height={200}
                     width={200}
                     unoptimized

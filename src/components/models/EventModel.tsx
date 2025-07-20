@@ -33,7 +33,7 @@ const EventModel = ({
     title,
     description,
     photo_urls,
-    property_id,
+    id,
     price,
     rooms,
     province,
@@ -44,10 +44,10 @@ const EventModel = ({
   } = listing;
 
   useEffect(() => {
-    if (property_id && user?.user_id) {
+    if (id && user?.userId) {
       (async () => {
         setLoading(true);
-        const result = await findUserPropertyBooking(user.user_id, property_id);
+        const result = await findUserPropertyBooking(user.userId, id);
         setBooking(result);
         setLoading(false);
       })();
@@ -58,8 +58,8 @@ const EventModel = ({
     setLoading(true);
 
     const result = await createBooking({
-      property: property_id,
-      user: user.user_id,
+      event: id,
+      user: user.userId,
       price: price,
       start_date: formatDate(dateRange.startDate, "YYYY-MM-DD"),
       end_date: formatDate(dateRange.endDate, "YYYY-MM-DD"),
@@ -81,7 +81,7 @@ const EventModel = ({
 
     const result = await manageBooking(booking.booking_id, "PATCH", { status });
     if (status === "confirmed") {
-      await manageProperty(booking.property.property_id, "PATCH", {
+      await manageProperty(booking.event.id, "PATCH", {
         status: "reserved",
       });
     }
@@ -206,7 +206,7 @@ const EventModel = ({
                 >
                   <span className={(loading && "text-sm") || "text-base"}>
                     {loading
-                      ? "Checking if property availability..."
+                      ? "Checking if event availability..."
                       : "Book Now"}
                   </span>
                 </button>

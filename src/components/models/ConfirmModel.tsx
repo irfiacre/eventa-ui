@@ -1,9 +1,6 @@
-"use client"
-import React, { useState } from "react";
+import React from "react";
 import BaseCard from "../cards/BaseCard";
-import Image from "next/image";
-import { DialogPanel, DialogTitle } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const ConfirmModel = ({
   title,
@@ -29,8 +26,8 @@ const ConfirmModel = ({
             <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
 
               <div className="sm:flex sm:items-start">
-                <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
-                  <ExclamationTriangleIcon aria-hidden="true" className="size-6 text-primary" />
+                <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-primary/10 sm:mx-0 sm:size-10">
+                  <Icon icon="tabler:check" fontSize={28} className="size-6 text-primary"/>
                 </div>
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                   <p>

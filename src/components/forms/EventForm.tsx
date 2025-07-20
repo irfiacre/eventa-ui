@@ -39,8 +39,8 @@ const EventForm = ({
   const [error, setError] = useState<any>({
     title: "",
     price: "",
-    rooms: "",
-    province: "",
+    capacity: "",
+    location: "",
     imageUpload: "",
   });
 
@@ -73,7 +73,7 @@ const EventForm = ({
     if (state.location === "") {
       setError((prevState: any) => ({
         ...prevState,
-        rooms: "Location is required!",
+        capacity: "Location is required!",
       }));
       return;
     }
@@ -91,7 +91,7 @@ const EventForm = ({
       }));
       return;
     }
-    onFormSubmit({ ...state, thumbnail: imageUrlArray[0] });
+    onFormSubmit({ ...state });
   };
 
   useEffect(() => {
@@ -104,15 +104,14 @@ const EventForm = ({
       capacity: defaultValues?.capacity || "",
       thumbnail: defaultValues?.thumbnail || "",
     });
-    setImageUrlArray(defaultValues?.photo_urls || []);
   }, [defaultValues]);
 
   const handleSuccess = (result: any, widget: any) => {
     if (result?.info) {
-      setImageUrlArray((prevState: any) => [
+      setState((prevState: any) => ({
         ...prevState,
-        result?.info.secure_url,
-      ]);
+        thumbnail: result?.info.secure_url,
+      }));
     }
     setError((prevState: any) => ({
       ...prevState,
@@ -158,7 +157,7 @@ const EventForm = ({
             }`}
           >
             <label htmlFor="price" className="block mb-2 text-base">
-              Price per night *
+              Price *
             </label>
             <input
               type="number"
@@ -168,64 +167,63 @@ const EventForm = ({
                   ? "bg-red-50 border border-red-500 text-red-900"
                   : "bg-backgroundColor border border-borderColorLight focus:bg-white focus:border-borderColorLight"
               } text-md rounded-md  focus:outline-none disabled:bg-backgroundColor2`}
-              placeholder="Enter desired price property..."
+              placeholder="Enter desired price event..."
               value={state.price}
               onChange={handleInputChange}
               required
             />
-            {error.rooms && (
+            {error.capacity && (
               <p className="mt-2 text-sm text-red-500">{error.price}</p>
             )}
           </div>
           <div
             className={`w-full p-3.5 block mb-2 ${
-              error.rooms && "text-red-500"
+              error.capacity && "text-red-500"
             }`}
           >
-            <label htmlFor="rooms" className="block mb-2 text-base">
+            <label htmlFor="capacity" className="block mb-2 text-base">
               Capacity *
             </label>
             <input
               type="number"
-              id="rooms"
+              id="capacity"
               className={`block w-full p-2 h-14 ${
-                error.rooms
+                error.capacity
                   ? "bg-red-50 border border-red-500 text-red-900"
                   : "bg-backgroundColor border border-borderColorLight focus:bg-white focus:border-borderColorLight"
               } text-md rounded-md  focus:outline-none disabled:bg-backgroundColor2`}
-              placeholder="Enter number of rooms in the property..."
-              value={state.rooms}
+              placeholder="Enter number of capacity in the event..."
+              value={state.capacity}
               onChange={handleInputChange}
             />
-            {error.rooms && (
-              <p className="mt-2 text-sm text-red-500">{error.rooms}</p>
+            {error.capacity && (
+              <p className="mt-2 text-sm text-red-500">{error.capacity}</p>
             )}
           </div>
         </div>
         <div className="w-full flex flex-row justify-between">
           <div className="w-full">
             <BaseInput
-              label="Address"
-              value={state.province}
+              label="location"
+              value={state.location}
               placeholder="Address location"
               onInputChange={handleInputChange}
               required
-              error={error.province}
+              error={error.location}
             />
           </div>
           <div className="w-full p-3.5 block mb-2">
-          <label htmlFor="furnished" className="mb-2 px-2 text-base">
-            Date of event
-          </label>
-          <div className="p-2">
-
-          <DatePicker
-            selected={state.date}
-            onChange={(date: any) => handleChangeDate(date)}
-            className="block w-full p-2 h-14 bg-backgroundColor border border-borderColorLight focus:bg-white focus:border-borderColorLight text-md rounded-md  focus:outline-none disabled:bg-backgroundColor2"
-          />
+            <label htmlFor="furnished" className="mb-2 px-2 text-base">
+              Date of event
+            </label>
+            <div className="p-2">
+              <DatePicker
+                selected={state.date}
+                onChange={(date: any) => handleChangeDate(date)}
+                className="block w-full p-2 h-14 bg-backgroundColor border border-borderColorLight focus:bg-white focus:border-borderColorLight text-md rounded-md  focus:outline-none disabled:bg-backgroundColor2"
+              />
+            </div>
           </div>
-        </div>
         </div>
         <div className="w-full p-3.5 block mb-2">
           <label htmlFor="furnished" className="mb-2 text-base">
@@ -235,7 +233,7 @@ const EventForm = ({
             id="description"
             rows={4}
             className="block w-full p-2 h-14 bg-backgroundColor border border-borderColorLight focus:bg-white focus:border-borderColorLight text-md rounded-md  focus:outline-none disabled:bg-backgroundColor2"
-            placeholder="Enter description for the property..."
+            placeholder="Enter description for the event..."
             value={state.description}
             onChange={handleInputChange}
           ></textarea>
@@ -261,21 +259,17 @@ const EventForm = ({
             <p className="mt-2 text-xs text-red-600">{error.statusText}</p>
           )}
 
-          {imageUrlArray[0] && (
+          {state.thumbnail && (
             <div className="py-2 space-y-2">
-              <p className="text-sm text-textLightColor">Uploaded images</p>
+              <p className="text-sm text-textLightColor">Uploaded image</p>
               <div className="flex flex-row flex-wrap items-center justify-start gap-5">
-                {imageUrlArray.map((imageUrl: any) => (
-                  <div key={imageUrl}>
-                    <CldImage
-                      width={200}
-                      height={100}
-                      src={imageUrl}
-                      alt="Uploaded image"
-                      className="rounded-lg h-28 w-52 object-cover"
-                    />
-                  </div>
-                ))}
+                <CldImage
+                  width={200}
+                  height={100}
+                  src={state.thumbnail}
+                  alt="Uploaded image"
+                  className="rounded-lg h-28 w-52 object-cover"
+                />
               </div>
             </div>
           )}
@@ -284,7 +278,6 @@ const EventForm = ({
         <div className="text-textLightColor text-sm font-light p-2.5">
           <span>* Is for Required Fields</span>
         </div>
-        
       </div>
       <div className="p-3.5">
         <button

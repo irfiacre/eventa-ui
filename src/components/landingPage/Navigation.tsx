@@ -1,40 +1,39 @@
 "use client";
-import React, { useState } from "react";
-import LogoIcon from "../logo/LogoIcon";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, signOut } from "next-auth/react";
 import UserViewComponent from "@/src/views/navigation/topNavbar/UserViewComponent";
 import ConfirmModel from "../models/ConfirmModel";
-import { make_user_a_host } from "@/services/backend";
-import { toast } from "react-toastify";
+// import { make_user_a_host } from "@/services/backend";
 import Link from "next/link";
-import { Icon } from "@iconify/react/dist/iconify.js";
 
-const NavigationSection = ({ user }: { user: any }) => {
+const NavigationSection = () => {
   const router = useRouter();
   const [isActive, handleDropdown] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState(null);
 
   const handleBtnClicked = () => {
     setOpen(true);
   };
-
-  const handleLoginWithGoogle = () => signIn("google");
-
-  const handleLogout = async () => {
-    await signOut({ callbackUrl: process.env.APP_BASE_URL });
-  };
-
-  const handleUpdateRole = async () => {
-    setLoading(true);
-    const result = await make_user_a_host(user.email);
-    setOpen(false);
-
-    if (result.role) {
+  useEffect(() => {
+    const userStr: any = localStorage.getItem("userDetails");
+    const userObj = JSON.parse(userStr);
+    if (userStr) setUser(userObj);
+    if (userObj?.role === "admin") {
       router.push("/dashboard");
     }
-    setLoading(false);
+  }, []);
+
+  const handleUpdateRole = () => {};
+
+  const handleLogout = async () => {
+    localStorage.removeItem("userDetails");
+    router.push("/");
+  };
+
+  const handleLogin = async () => {
+    router.push("/auth");
   };
 
   return (
@@ -51,16 +50,15 @@ const NavigationSection = ({ user }: { user: any }) => {
 
       <div className="flex flex-row items-center justify-between">
         <div className="flex items-center gap-2">
-            
           <Link
-              href="/"
-              className="text-primary text-2xl hover:text-primary/75"
-            >
-              eVENTA
-            </Link>
+            href="/"
+            className="text-primary text-2xl hover:text-primary/75"
+          >
+            eVENTA
+          </Link>
         </div>
         <div className="flex flex-row items-center justify-end">
-          {user?.role === "host" ? (
+          {user?.role === "admin" ? (
             <Link
               href={`/dashboard`}
               className="text-primary hover:text-primary focus:outline-none font-medium rounded-lg text-md text-center py-2.5 px-5"
@@ -75,7 +73,7 @@ const NavigationSection = ({ user }: { user: any }) => {
                   onClick={() => handleBtnClicked()}
                   className="text-primary hover:text-primary focus:outline-none font-medium rounded-lg text-md text-center py-2.5 px-5"
                 >
-                  Become a Host
+                  {user?.firstName} {user?.lastName}
                 </button>
               )}
             </div>
@@ -91,7 +89,7 @@ const NavigationSection = ({ user }: { user: any }) => {
           ) : (
             <button
               type="button"
-              onClick={() => handleLoginWithGoogle()}
+              onClick={() => handleLogin()}
               className="text-primary hover:text-primary/50 focus:outline-none font-medium rounded-lg text-md text-center py-2.5 px-5"
             >
               Login
