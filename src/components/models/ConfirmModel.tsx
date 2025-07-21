@@ -34,7 +34,7 @@ const ConfirmModel = ({
                     {title}
                   </p>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
+                    <p className="font-bold text-gray-500">
                      {subtitle}
                     </p>
                   </div>
@@ -47,7 +47,7 @@ const ConfirmModel = ({
                 type="button"
                 onClick={() => handleConfirmed()}
                 disabled={loading}
-                className={`inline-flex w-full justify-center rounded-md ${isDelete?"bg-red-600 hover:bg-red-500":"bg-primary hover:bg-primary/80"} px-10 py-2 text-sm font-semibold text-white shadow-xs  sm:ml-3 sm:w-auto disabled:bg-gray-500`}
+                className="inline-flex w-full justify-center rounded-md bg-primary hover:bg-primary/80 px-10 py-2 text-sm font-semibold text-white shadow-xs  sm:ml-3 sm:w-auto disabled:bg-gray-500"
               >
                 Yes
               </button>

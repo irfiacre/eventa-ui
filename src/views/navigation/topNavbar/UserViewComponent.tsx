@@ -48,7 +48,7 @@ const UserViewComponent = ({
                 tabIndex={-1}
                 id="menu-item-2"
               >
-                Profile
+                {user?.firstName} {user?.lastName}
               </Link>
               <button
                 type="button"

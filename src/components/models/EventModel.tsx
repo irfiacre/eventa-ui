@@ -79,14 +79,14 @@ const EventModel = ({
   const handleConfirmBooking = async (status: string) => {
     setLoading(true);
 
-    const result = await manageBooking(booking.booking_id, "PATCH", { status });
+    const result = await manageBooking(booking.id, "PATCH", { status });
     if (status === "confirmed") {
       await manageProperty(booking.event.id, "PATCH", {
         status: "reserved",
       });
     }
 
-    if (result.booking_id) {
+    if (result.id) {
       toast.success(`Your Booking was ${status}`, {
         hideProgressBar: true,
         closeOnClick: true,

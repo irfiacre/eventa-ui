@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import UserViewComponent from "@/src/views/navigation/topNavbar/UserViewComponent";
-import ConfirmModel from "../models/ConfirmModel";
-// import { make_user_a_host } from "@/services/backend";
+import ListModel from "../models/ListModel";
 import Link from "next/link";
 
 const NavigationSection = () => {
@@ -25,8 +24,6 @@ const NavigationSection = () => {
     }
   }, []);
 
-  const handleUpdateRole = () => {};
-
   const handleLogout = async () => {
     localStorage.removeItem("userDetails");
     router.push("/");
@@ -39,11 +36,8 @@ const NavigationSection = () => {
   return (
     <section className="px-10 py-2.5 space-y-5 max-md:px-5 bg-cover bg-no-repeat bg-center">
       {open && (
-        <ConfirmModel
-          title="Want to become a host"
-          subtitle="Allows you to Rent your properties"
-          loading={loading}
-          handleConfirmed={handleUpdateRole}
+        <ListModel
+          title="My Booking"
           handleClose={() => setOpen(false)}
         />
       )}
@@ -60,7 +54,7 @@ const NavigationSection = () => {
         <div className="flex flex-row items-center justify-end">
           {user?.role === "admin" ? (
             <Link
-              href={`/dashboard`}
+              href="/dashboard"
               className="text-primary hover:text-primary focus:outline-none font-medium rounded-lg text-md text-center py-2.5 px-5"
             >
               Dashboard
@@ -73,7 +67,7 @@ const NavigationSection = () => {
                   onClick={() => handleBtnClicked()}
                   className="text-primary hover:text-primary focus:outline-none font-medium rounded-lg text-md text-center py-2.5 px-5"
                 >
-                  {user?.firstName} {user?.lastName}
+                  My bookings
                 </button>
               )}
             </div>

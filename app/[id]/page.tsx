@@ -5,7 +5,12 @@ import BaseCard from "@/src/components/cards/BaseCard";
 import isAuth from "@/src/components/isAuth";
 import { toast } from "react-toastify";
 import "react-multi-carousel/lib/styles.css";
-import { getEvents, manageEvent } from "@/services/backend";
+import {
+  createBooking,
+  getEvents,
+  manageBooking,
+  manageEvent,
+} from "@/services/backend";
 import ConfirmModel from "@/src/components/models/ConfirmModel";
 import { DEFAULT_IMAGE } from "@/constants/fixtures";
 import Image from "next/image";
@@ -17,10 +22,11 @@ import { formatPrice } from "@/util/helpers";
 
 const EventPage = ({ user }: { user: any }) => {
   const params = useParams();
-  const router = useRouter();
   const [event, setEvent] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
+  const [booking, setBooking] = useState<any>({});
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
     if (!params.id) return;
@@ -39,8 +45,17 @@ const EventPage = ({ user }: { user: any }) => {
       </BaseCard>
     );
 
-  const handleBuyTicket = () => {
-    setOpen(true);
+  const handleBuyTicket = async () => {
+    setLoading(false);
+    const result = await createBooking({ eventId: event.id });
+    setLoading(false);
+
+    if (result.message) {
+      setMessage(result.message);
+    } else {
+      setBooking(result);
+      setMessage("Your Booking was made");
+    }
   };
 
   return (
@@ -50,7 +65,7 @@ const EventPage = ({ user }: { user: any }) => {
         {open && (
           <ConfirmModel
             title={`Do you want to book a ticket for "${event?.title}"`}
-            subtitle="This action is irreversible and permanent"
+            subtitle={message}
             loading={loading}
             handleConfirmed={handleBuyTicket}
             handleClose={() => setOpen(false)}
@@ -77,7 +92,10 @@ const EventPage = ({ user }: { user: any }) => {
                 {event?.user?.lastName})
               </h1>
               <div>
-                <BaseButton text="Buy Ticket" handleSubmit={()=> setOpen(true)} />
+                <BaseButton
+                  text="Buy Ticket"
+                  handleSubmit={() => setOpen(true)}
+                />
               </div>
             </div>
             <div className="text-textLightColor text-justify space-y-2">

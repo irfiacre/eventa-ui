@@ -9,7 +9,7 @@ import Link from "next/link";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { getEvents, manageEvent } from "@/services/backend";
 import { CldImage } from "next-cloudinary";
-import ConfirmModel from "@/src/components/models/ConfirmModel";
+import ConfirmModel from "@/src/components/models/ConfirmModel2";
 import Image from "next/image";
 import { DEFAULT_IMAGE } from "@/constants/fixtures";
 import { formatPrice } from "@/util/helpers";

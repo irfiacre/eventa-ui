@@ -132,10 +132,12 @@ const manageEvent = async (
 
 const createBooking = async (data: any) => {
   try {
+    const TOKEN = getToken();
     const response = await fetch(`${BACKEND_BASE_URL}/bookings/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${TOKEN}`,
       },
       body: JSON.stringify(data),
     });
@@ -153,13 +155,19 @@ const createBooking = async (data: any) => {
   }
 };
 
-const getBookings = async (eventId?: string) => {
+const getBookings = async (bookingId?: string) => {
   try {
+    const TOKEN = getToken();
     const response = await fetch(
-      eventId
-        ? `${BACKEND_BASE_URL}/bookings/${eventId}/`
+      bookingId
+        ? `${BACKEND_BASE_URL}/bookings/${bookingId}/`
         : `${BACKEND_BASE_URL}/bookings/`,
-      { method: "GET" }
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      }
     );
     if (response.status === 404) return null;
     if (!response.ok) console.warn(`Response status: ${response.status}`);
@@ -173,17 +181,21 @@ const getBookings = async (eventId?: string) => {
 };
 
 const manageBooking = async (
-  eventId: string,
-  method: string = "PATCH",
+  bookingId: string,
+  method: string = "PUT",
   data?: any
 ) => {
   try {
+    const TOKEN = getToken();
     const response = await fetch(
-      `${BACKEND_BASE_URL}/bookings/${eventId}/`,
-      method === "PATCH"
+      `${BACKEND_BASE_URL}/bookings/${bookingId}/`,
+      method === "PUT"
         ? {
             method,
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${TOKEN}`,
+            },
             body: JSON.stringify(data),
           }
         : { method }
