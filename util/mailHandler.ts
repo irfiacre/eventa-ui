@@ -1,6 +1,8 @@
-import { MAIL_APP_PSWRD, SENDER_EMAIL } from "@/constants/fixtures";
 import nodemailer from "nodemailer";
 import { formatHtmlEmail } from "./helpers";
+
+const SENDER_EMAIL = "";
+const MAIL_APP_PSWRD = "";
 
 let transporter = nodemailer.createTransport({
   service: "gmail",

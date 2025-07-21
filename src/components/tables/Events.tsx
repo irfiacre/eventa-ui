@@ -4,7 +4,6 @@ import BaseCard from "../cards/BaseCard";
 import SearchableInput from "../inputs/SearchInput";
 import Pagination from "./Pagination";
 import Link from "next/link";
-import { Icon } from "@iconify/react";
 import { formatDate, formatPrice } from "@/util/helpers";
 import ConfirmModel from "../models/ConfirmModel";
 

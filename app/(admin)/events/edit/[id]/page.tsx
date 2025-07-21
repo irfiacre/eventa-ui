@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const EditEventPage = () => {
-  const params = useParams();
+  const params: any = useParams();
   const [event, setProperty] = useState<any>({});
   const [loading, setLoading] = useState(false);
 

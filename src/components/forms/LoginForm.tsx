@@ -31,7 +31,7 @@ const LoginForm = ({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<LoginFormInputs | SignupFormInputs>();
+  } = useForm<LoginFormInputs | SignupFormInputs | any>();
 
   const handleFormSubmit = (data: any) => {
     if (onSubmit) onSubmit(data);

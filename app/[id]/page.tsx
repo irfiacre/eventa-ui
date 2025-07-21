@@ -19,6 +19,7 @@ import NavigationSection from "@/src/components/landingPage/Navigation";
 import Footer from "@/src/components/landingPage/Footer";
 import moment from "moment";
 import { formatPrice } from "@/util/helpers";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const EventPage = ({ user }: { user: any }) => {
   const params = useParams();
@@ -61,7 +62,7 @@ const EventPage = ({ user }: { user: any }) => {
   return (
     <div>
       <NavigationSection />
-      <div className="px-10 py-10 text-textDarkColor space-y-5">
+      {event.title && <div className="px-10 py-10 text-textDarkColor space-y-5">
         {open && (
           <ConfirmModel
             title={`Do you want to book a ticket for "${event?.title}"`}
@@ -144,7 +145,7 @@ const EventPage = ({ user }: { user: any }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
       <Footer />
     </div>
   );

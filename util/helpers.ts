@@ -12,7 +12,7 @@ export const emailValidate = (email: string) => {
 };
 
 export const formatDate = (date: Date, format?: string): string => {
-  const formatToUse = format ? format : "MMM Do YY";
+  const formatToUse = format ? format : "DD MMM YYYY";
   return moment(date).format(formatToUse);
 };
 

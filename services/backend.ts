@@ -155,6 +155,29 @@ const createBooking = async (data: any) => {
   }
 };
 
+const getEventBookings = async (eventId: string | undefined) => {
+  try {
+    const TOKEN = getToken();
+    const response = await fetch(
+      `${BACKEND_BASE_URL}/events/${eventId}/bookings`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${TOKEN}`,
+        },
+      }
+    );
+    if (response.status === 404) return null;
+    if (!response.ok) console.warn(`Response status: ${response.status}`);
+
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.warn(error);
+    return null;
+  }
+};
+
 const getBookings = async (bookingId?: string) => {
   try {
     const TOKEN = getToken();
@@ -225,4 +248,5 @@ export {
   createBooking,
   getBookings,
   manageBooking,
+  getEventBookings
 };

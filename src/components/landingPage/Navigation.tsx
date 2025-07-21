@@ -10,7 +10,7 @@ const NavigationSection = () => {
   const [isActive, handleDropdown] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
 
   const handleBtnClicked = () => {
     setOpen(true);
@@ -26,7 +26,7 @@ const NavigationSection = () => {
 
   const handleLogout = async () => {
     localStorage.removeItem("userDetails");
-    router.push("/");
+    router.push("/auth");
   };
 
   const handleLogin = async () => {

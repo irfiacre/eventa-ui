@@ -77,7 +77,7 @@ const EventForm = ({
       }));
       return;
     }
-    if (state.date === "") {
+    if (state.date) {
       setError((prevState: any) => ({
         ...prevState,
         date: "Date is required!",

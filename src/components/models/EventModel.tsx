@@ -4,9 +4,8 @@ import BaseCard from "../cards/BaseCard";
 import Image from "next/image";
 import {
   createBooking,
-  findUserPropertyBooking,
   manageBooking,
-  manageProperty,
+  getBookings
 } from "@/services/backend";
 import { toast } from "react-toastify";
 import Datepicker from "react-tailwindcss-datepicker";
@@ -43,18 +42,7 @@ const EventModel = ({
     status,
   } = listing;
 
-  useEffect(() => {
-    if (id && user?.userId) {
-      (async () => {
-        setLoading(true);
-        const result = await findUserPropertyBooking(user.userId, id);
-        setBooking(result);
-        setLoading(false);
-      })();
-    }
-  }, [listing]);
-
-  const handleReserveRoom = async () => {
+  const handleBookTicket = async () => {
     setLoading(true);
 
     const result = await createBooking({
@@ -79,12 +67,7 @@ const EventModel = ({
   const handleConfirmBooking = async (status: string) => {
     setLoading(true);
 
-    const result = await manageBooking(booking.id, "PATCH", { status });
-    if (status === "confirmed") {
-      await manageProperty(booking.event.id, "PATCH", {
-        status: "reserved",
-      });
-    }
+    const result = await manageBooking(booking.id, "PUT", { status });
 
     if (result.id) {
       toast.success(`Your Booking was ${status}`, {
@@ -200,7 +183,7 @@ const EventModel = ({
               {!booking && (
                 <button
                   type="submit"
-                  onClick={handleReserveRoom}
+                  onClick={handleBookTicket}
                   className="w-2/4 h-14 text-white bg-primary hover:bg-white hover:text-primary hover:border hover:border-primary focus:outline-none font-medium rounded-lg text-md text-center py-3 disabled:bg-borderColorLight"
                   disabled={loading}
                 >
