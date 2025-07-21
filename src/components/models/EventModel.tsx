@@ -14,11 +14,9 @@ import { CldImage } from "next-cloudinary";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 
 const EventModel = ({
-  user,
   listing,
   onClose,
 }: {
-  user: any;
   listing: any;
   onClose: () => void;
 }) => {
@@ -47,7 +45,6 @@ const EventModel = ({
 
     const result = await createBooking({
       event: id,
-      user: user.userId,
       price: price,
       start_date: formatDate(dateRange.startDate, "YYYY-MM-DD"),
       end_date: formatDate(dateRange.endDate, "YYYY-MM-DD"),

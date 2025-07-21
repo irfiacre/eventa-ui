@@ -54,7 +54,7 @@ const EventForm = ({
     setError((prevState: any) => ({ ...prevState, [e.target.id]: "" }));
   };
 
-  const handleSubmitForm = (e: any) => {
+  const handleSubmitForm = (e: any) => {    
     e.preventDefault();
     if (state.title === "") {
       setError((prevState: any) => ({
@@ -74,13 +74,6 @@ const EventForm = ({
       setError((prevState: any) => ({
         ...prevState,
         capacity: "Location is required!",
-      }));
-      return;
-    }
-    if (state.date) {
-      setError((prevState: any) => ({
-        ...prevState,
-        date: "Date is required!",
       }));
       return;
     }

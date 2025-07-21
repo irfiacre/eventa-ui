@@ -10,7 +10,7 @@ import { formatPrice } from "@/util/helpers";
 import Skeleton from "react-loading-skeleton";
 import Link from "next/link";
 
-const SecondSection = ({ user }: { user: any }) => {
+const SecondSection = () => {
   const [cardContent, setCardContent] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
@@ -33,7 +33,6 @@ const SecondSection = ({ user }: { user: any }) => {
         </div>
         {selectedRental && (
           <EventModel
-            user={user}
             onClose={() => setSelectedRental(null)}
             listing={selectedRental}
           />

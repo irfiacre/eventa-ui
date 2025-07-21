@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { formatPrice } from "@/util/helpers";
 import Head from "next/head";
 
-const DashboardPage = ({ userInfo }: { userInfo: any }) => {
+const DashboardPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [events, setEvents] = useState<Array<any>>([]);
   const [refetch, setRefetch] = useState<boolean>(false);
@@ -43,7 +43,7 @@ const DashboardPage = ({ userInfo }: { userInfo: any }) => {
         setLoading(false);
       })();
     // }
-  }, [refetch, userInfo]);
+  }, [refetch]);
 
   const deleteEvent = async (id: string) => {
     const result = await manageEvent(id, "DELETE");

@@ -3,7 +3,6 @@ import React from "react";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import { primaryColorBg } from "@/constants/values";
-import { SessionProvider } from "next-auth/react";
 import { ToastContainer } from "react-toastify";
 import Head from "next/head";
 
@@ -32,10 +31,8 @@ export default function RootLayout({
         <Head>
           <title>Eventa</title>
         </Head>
-        <SessionProvider>
           <ToastContainer />
           {children}
-        </SessionProvider>
       </body>
     </html>
   );

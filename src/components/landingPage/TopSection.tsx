@@ -1,6 +1,6 @@
 import React from "react";
 
-const TopSection = ({ user }: { user: any }) => {
+const TopSection = () => {
   return (
     <section
       className="mx-10 rounded-3xl bg-cover bg-no-repeat bg-center max-md:mx-3"
