@@ -4,6 +4,7 @@ import Events from "@/src/components/tables/Events";
 import {
   // getAnalytics,
   getEvents,
+  getUserAnalytics,
   manageEvent,
 } from "@/services/backend";
 import { toast } from "react-toastify";
@@ -20,24 +21,21 @@ const DashboardPage = () => {
     // if (userInfo) {
       (async () => {
         setLoading(true);
-        const eventsResult = await getEvents(
-          // userInfo.user_id
-        );        
+        const eventsResult = await getEvents();        
         setEvents(eventsResult);
-        const analyticsResult: any = {}
-        // await getAnalytics(userInfo.id);
+        const analyticsResult: any = await getUserAnalytics();
         setAnalytics([
           {
             title: "Events",
-            count: 4
+            count: analyticsResult.events || 0
           },
           {
             title: "Bookings",
-            count:  3,
+            count:  analyticsResult.bookings || 0,
           },
           {
             title: "Earnings",
-            count: formatPrice(10000),
+            count: formatPrice(analyticsResult.earnings || 0),
           },
         ]);
         setLoading(false);

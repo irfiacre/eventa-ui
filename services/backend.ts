@@ -238,6 +238,29 @@ const manageBooking = async (
     return null;
   }
 };
+const getUserAnalytics = async () => {
+  try {
+    const TOKEN = getToken();
+    const response = await fetch(`${BACKEND_BASE_URL}/analytics/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    });
+    if (response.status === 404) {
+      return {};
+    }
+    if (!response.ok) {
+      console.warn(`Response status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.warn(error);
+    return {};
+  }
+};
 
 export {
   registerUser,
@@ -248,5 +271,6 @@ export {
   createBooking,
   getBookings,
   manageBooking,
-  getEventBookings
+  getEventBookings,
+  getUserAnalytics,
 };

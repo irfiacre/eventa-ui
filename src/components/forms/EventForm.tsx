@@ -35,7 +35,6 @@ const EventForm = ({
     capacity: "",
     thumbnail: "",
   });
-  const [imageUrlArray, setImageUrlArray] = useState<Array<string>>([]);
   const [error, setError] = useState<any>({
     title: "",
     price: "",

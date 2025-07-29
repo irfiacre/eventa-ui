@@ -19,6 +19,7 @@ const EditEventPage = () => {
 
   const handleUpdateEvent = async (data: any) => {
     setLoading(true);
+    data.price =  parseInt(data.price);
     const result = await manageEvent(params?.id, "PUT", data);
     if (result.title) {
       toast.success(`Your event "${result.title}" updated successfuly!`, {

@@ -23,6 +23,7 @@ const SecondSection = () => {
   }, []);
 
   const [selectedRental, setSelectedRental] = useState<null | any>(null);
+  
   return (
     <section className="px-10 pb-10 align-middle max-md:px-5">
       <div className="">

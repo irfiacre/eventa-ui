@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import BaseCard from "../cards/BaseCard";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { manageBooking, getBookings } from "@/services/backend";
-import Link from "next/link";
+import { redirect } from "next/navigation";
+import isAuth from "../isAuth";
 
 const ConfirmModel = ({
   title,
@@ -14,11 +15,15 @@ const ConfirmModel = ({
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [refresh, setRefresh] = useState<number>(1);
+
   
   useEffect(() => {
     (async () => {
       setLoading(false);
       const result = await getBookings();
+      if (result.message) {
+        redirect("/auth");
+      }
       setBookings(result);
       setLoading(false);
     })();
@@ -29,7 +34,7 @@ const ConfirmModel = ({
     await manageBooking(id, "PUT", { status });
     setRefresh((prevState: number) => prevState + 1);
     setLoading(false);
-  };
+  };  
 
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity flex justify-center items-center z-50">
@@ -109,4 +114,4 @@ const ConfirmModel = ({
   );
 };
 
-export default ConfirmModel;
+export default isAuth(ConfirmModel);
