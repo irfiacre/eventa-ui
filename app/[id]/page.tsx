@@ -24,15 +24,15 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 const EventPage = ({ user }: { user: any }) => {
   const params = useParams();
   const [event, setEvent] = useState<any>({});
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
-  const [booking, setBooking] = useState<any>({});
+  const [bookLoading, setBookLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
     if (!params.id) return;
     (async () => {
-      setLoading(false);
+      setLoading(true);
       const result = await getEvents(params.id);
       setEvent(result);
       setLoading(false);
@@ -46,16 +46,12 @@ const EventPage = ({ user }: { user: any }) => {
       </BaseCard>
     );
 
-  const handleBuyTicket = async () => {
-    setLoading(false);
-    const result = await createBooking({ eventId: event.id });
-    setLoading(false);
-
+  const handleBuyTicket = async (numb: number) => {    
+    setBookLoading(true);
+    const result = await createBooking({ eventId: event.id, number: numb });
+    setBookLoading(false);
     if (result.message) {
       setMessage(result.message);
-    } else {
-      setBooking(result);
-      setMessage("Your Booking was made");
     }
   };
 
@@ -65,9 +61,9 @@ const EventPage = ({ user }: { user: any }) => {
       {event.title && <div className="px-10 py-10 text-textDarkColor space-y-5">
         {open && (
           <ConfirmModel
-            title={`Do you want to book a ticket for "${event?.title}"`}
-            subtitle={message}
-            loading={loading}
+            title={event?.title}
+            message={message}
+            loading={bookLoading}
             handleConfirmed={handleBuyTicket}
             handleClose={() => setOpen(false)}
           />
