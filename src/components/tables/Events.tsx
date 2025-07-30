@@ -48,11 +48,11 @@ const EventsTable = ({
       {eventToDelete && (
         <ConfirmModel
           title={`Are you sure you want to delete "${eventToDelete.title}"`}
-          subtitle="This action is irreversible and permanent"
+          message="This action is irreversible and permanent"
           loading={loading}
           handleConfirmed={handleConfirmDelete}
           handleClose={() => setEventToDelete(null)}
-          isDelete
+          // isDelete
         />
       )}
       <SearchableInput
