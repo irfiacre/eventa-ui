@@ -62,11 +62,11 @@ const EventPage = ({ user }: { user: any }) => {
         {open && (
           <ConfirmModel
             title={`Are you sure you want to delete "${event.title}"`}
-            subtitle="This action is irreversible and permanent"
+            message="This action is irreversible and permanent"
             loading={loading}
             handleConfirmed={handleConfirmDelete}
             handleClose={() => setOpen(false)}
-            isDelete
+            // isDelete
           />
         )}
         <div className="flex flex-row max-md:flex-col max-md:divide-y-2 md:divide-x-2">
